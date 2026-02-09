@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#FFFFFF">
+  <title>No Fatties</title>
+  <link rel="manifest" href="/manifest.json">
+  <link rel="apple-touch-icon" href="/icon-192.png">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- Setup Screen -->
+  <div id="setup-screen" class="screen active">
+    <span class="bg-emoji">🍟</span>
+    <span class="bg-emoji">🍔</span>
+    <span class="bg-emoji">🌭</span>
+    <span class="bg-emoji">🍕</span>
+    <span class="bg-emoji">🧁</span>
+    <span class="bg-emoji">🥤</span>
+    <span class="bg-emoji">🍩</span>
+    <span class="bg-emoji">🍿</span>
+
+    <h1>NO<br>FATTIES</h1>
+    <p class="subtitle">Set your bite limit. We'll watch. We'll count. We'll judge.</p>
+    <div class="limit-section">
+      <label>Bite Limit</label>
+      <input id="limit-input" type="number" value="10" min="1" max="999">
+      <div class="presets">
+        <button class="preset-btn" data-value="5">5</button>
+        <button class="preset-btn" data-value="10">10</button>
+        <button class="preset-btn" data-value="25">25</button>
+        <button class="preset-btn" data-value="50">50</button>
+      </div>
+    </div>
+    <button id="start-btn">START</button>
+  </div>
+
+  <!-- Monitor Screen -->
+  <div id="monitor-screen" class="screen">
+    <video id="camera" playsinline autoplay muted></video>
+    <div class="bite-flash" id="bite-flash"></div>
+    <div class="monitor-overlay">
+      <div class="counter-display">
+        <div id="current-count">0</div>
+        <span class="counter-divider">/</span>
+        <span id="limit-display">10</span>
+      </div>
+      <div class="progress-container">
+        <div id="progress-bar"></div>
+      </div>
+    </div>
+    <button id="stop-btn">STOP</button>
+    <div id="status-msg"></div>
+  </div>
+
+  <!-- Alarm Screen -->
+  <div id="alarm-screen" class="screen">
+    <span class="bg-food">🍟</span>
+    <span class="bg-food">🍔</span>
+    <span class="bg-food">🌭</span>
+    <span class="bg-food">🍕</span>
+    <span class="bg-food">🧁</span>
+    <span class="bg-food">🍩</span>
+
+    <div class="alarm-emoji">🚨🍟🚨</div>
+    <h1>NO<br>FATTIES!</h1>
+    <p class="final-count" id="final-count">You hit your limit!</p>
+    <button id="stop-alarm-btn">STOP</button>
+    <div class="alarm-wave"></div>
+  </div>
+
+  <!-- Error Overlay -->
+  <div id="error-overlay">
+    <div class="error-icon">!</div>
+    <div id="error-text">Something went wrong</div>
+    <button id="retry-btn">TRY AGAIN</button>
+  </div>
+
+  <!-- Loading Overlay -->
+  <div id="loading-overlay">
+    <div class="spinner"></div>
+    <div id="loading-text">Loading models...</div>
+  </div>
+
+  <script>
+    if ('serviceWorker' in navigator && !window.Capacitor) {
+      navigator.serviceWorker.register('/sw.js').then(reg => {
+        if (reg.waiting) reg.waiting.postMessage({ type: 'SKIP_WAITING' });
+        reg.addEventListener('updatefound', () => {
+          const sw = reg.installing;
+          sw.addEventListener('statechange', () => {
+            if (sw.state === 'installed' && navigator.serviceWorker.controller) {
+              sw.postMessage({ type: 'SKIP_WAITING' });
+            }
+          });
+        });
+      }).catch(err => console.warn('SW registration failed:', err));
+
+      let refreshing = false;
+      navigator.serviceWorker.addEventListener('controllerchange', () => {
+        if (!refreshing) { refreshing = true; window.location.reload(); }
+      });
+    }
+  </script>
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

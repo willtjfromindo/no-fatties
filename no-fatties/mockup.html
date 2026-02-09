@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>No Fatties — UI Mockup</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      background: #f0f0f0;
+      color: #2B2D42;
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      padding: 40px;
+      flex-wrap: wrap;
+    }
+
+    h2.label {
+      text-align: center;
+      font-size: 14px;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 12px;
+    }
+
+    .phone {
+      width: 375px;
+      height: 812px;
+      border-radius: 40px;
+      overflow: hidden;
+      border: 8px solid #222;
+      position: relative;
+      flex-shrink: 0;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+    }
+
+    /* ═══ SETUP SCREEN ═══ */
+    .setup {
+      background: #FFFFFF;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      gap: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .setup .bg-emoji {
+      position: absolute;
+      font-size: 40px;
+      opacity: 0.12;
+      pointer-events: none;
+    }
+    .setup .bg-emoji:nth-child(1) { top: 8%; left: 10%; font-size: 50px; transform: rotate(-15deg); }
+    .setup .bg-emoji:nth-child(2) { top: 15%; right: 12%; font-size: 35px; transform: rotate(20deg); }
+    .setup .bg-emoji:nth-child(3) { top: 35%; left: 5%; font-size: 45px; transform: rotate(10deg); }
+    .setup .bg-emoji:nth-child(4) { bottom: 25%; right: 8%; font-size: 55px; transform: rotate(-10deg); }
+    .setup .bg-emoji:nth-child(5) { bottom: 12%; left: 15%; font-size: 38px; transform: rotate(25deg); }
+    .setup .bg-emoji:nth-child(6) { top: 55%; right: 15%; font-size: 42px; transform: rotate(-20deg); }
+    .setup .bg-emoji:nth-child(7) { bottom: 40%; left: 25%; font-size: 30px; transform: rotate(5deg); }
+    .setup .bg-emoji:nth-child(8) { top: 5%; left: 50%; font-size: 32px; transform: rotate(-8deg); }
+
+    .setup .title {
+      font-family: 'Fredoka One', cursive;
+      font-size: 52px;
+      color: #D62828;
+      text-align: center;
+      z-index: 1;
+      text-shadow: 2px 2px 0 rgba(0,0,0,0.05);
+    }
+
+    .setup .subtitle {
+      font-size: 15px;
+      color: #888;
+      text-align: center;
+      max-width: 260px;
+      line-height: 1.5;
+      z-index: 1;
+    }
+
+    .setup .limit-label {
+      font-size: 12px;
+      color: #aaa;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      font-weight: 600;
+      z-index: 1;
+    }
+
+    .setup .limit-input {
+      width: 130px;
+      font-size: 56px;
+      font-family: 'Fredoka One', cursive;
+      text-align: center;
+      background: #FFF8F0;
+      border: 3px solid #F4A261;
+      border-radius: 20px;
+      color: #D62828;
+      padding: 8px;
+      z-index: 1;
+    }
+
+    .setup .presets {
+      display: flex;
+      gap: 10px;
+      z-index: 1;
+    }
+    .setup .preset {
+      padding: 10px 20px;
+      font-size: 16px;
+      font-weight: 700;
+      background: #FFF;
+      border: 2px solid #E8E8E8;
+      border-radius: 14px;
+      color: #555;
+      cursor: pointer;
+    }
+    .setup .preset.active {
+      background: #FFF0E0;
+      border-color: #F4A261;
+      color: #D62828;
+    }
+
+    .setup .start-btn {
+      margin-top: 8px;
+      padding: 18px 72px;
+      font-size: 22px;
+      font-family: 'Fredoka One', cursive;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      background: #D62828;
+      border: none;
+      border-radius: 18px;
+      color: #fff;
+      z-index: 1;
+      box-shadow: 0 6px 20px rgba(214, 40, 40, 0.3);
+    }
+
+    /* ═══ MONITOR SCREEN ═══ */
+    .monitor {
+      background: #1a1a1a;
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .monitor .fake-camera {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #2a3a2a 0%, #1a2a1a 50%, #2a3a2a 100%);
+      opacity: 0.6;
+    }
+
+    .monitor .camera-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: rgba(255,255,255,0.15);
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+    }
+
+    .monitor .counter-overlay {
+      position: absolute;
+      top: 60px;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      z-index: 2;
+    }
+
+    .monitor .count-num {
+      font-family: 'Fredoka One', cursive;
+      font-size: 110px;
+      color: #fff;
+      text-shadow: 0 4px 30px rgba(0,0,0,0.5);
+      line-height: 1;
+    }
+
+    .monitor .count-divider {
+      font-size: 28px;
+      color: rgba(255,255,255,0.5);
+      font-weight: 300;
+    }
+
+    .monitor .count-limit {
+      font-size: 28px;
+      color: rgba(255,255,255,0.5);
+      font-weight: 300;
+    }
+
+    .monitor .progress-wrap {
+      position: absolute;
+      bottom: 100px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80%;
+      z-index: 2;
+    }
+
+    .monitor .progress-bg {
+      width: 100%;
+      height: 12px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .monitor .progress-fill {
+      height: 100%;
+      width: 30%;
+      background: linear-gradient(90deg, #F4A261, #D62828);
+      border-radius: 6px;
+    }
+
+    .monitor .progress-label {
+      text-align: center;
+      margin-top: 8px;
+      font-size: 13px;
+      color: rgba(255,255,255,0.4);
+    }
+
+    .monitor .stop-btn {
+      position: absolute;
+      bottom: 30px;
+      right: 24px;
+      padding: 10px 22px;
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      background: rgba(0,0,0,0.5);
+      border: 2px solid rgba(255,255,255,0.2);
+      border-radius: 12px;
+      color: #fff;
+      z-index: 2;
+    }
+
+    .monitor .status {
+      position: absolute;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 12px;
+      color: rgba(255,255,255,0.4);
+      z-index: 2;
+    }
+
+    .monitor .bite-indicator {
+      position: absolute;
+      bottom: 30px;
+      left: 24px;
+      font-size: 28px;
+      z-index: 2;
+    }
+
+    /* ═══ ALARM SCREEN ═══ */
+    .alarm {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 28px;
+      background: linear-gradient(135deg, #D62828, #B01E1E);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .alarm .bg-food {
+      position: absolute;
+      font-size: 60px;
+      opacity: 0.15;
+    }
+    .alarm .bg-food:nth-child(1) { top: 5%; left: 10%; transform: rotate(-20deg); }
+    .alarm .bg-food:nth-child(2) { top: 10%; right: 10%; font-size: 50px; transform: rotate(15deg); }
+    .alarm .bg-food:nth-child(3) { bottom: 15%; left: 15%; font-size: 55px; transform: rotate(10deg); }
+    .alarm .bg-food:nth-child(4) { bottom: 8%; right: 12%; transform: rotate(-15deg); }
+    .alarm .bg-food:nth-child(5) { top: 40%; left: 5%; font-size: 45px; }
+    .alarm .bg-food:nth-child(6) { top: 45%; right: 5%; font-size: 50px; transform: rotate(20deg); }
+
+    .alarm .alarm-title {
+      font-family: 'Fredoka One', cursive;
+      font-size: 58px;
+      color: #fff;
+      text-align: center;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      z-index: 1;
+      line-height: 1.1;
+    }
+
+    .alarm .alarm-emoji {
+      font-size: 48px;
+      z-index: 1;
+    }
+
+    .alarm .final-text {
+      font-size: 18px;
+      color: rgba(255,255,255,0.85);
+      z-index: 1;
+    }
+
+    .alarm .stop-alarm-btn {
+      padding: 20px 52px;
+      font-size: 22px;
+      font-family: 'Fredoka One', cursive;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      background: #fff;
+      border: none;
+      border-radius: 18px;
+      color: #D62828;
+      z-index: 1;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+    }
+
+    .alarm .alarm-wave {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 120px;
+      background: rgba(0,0,0,0.1);
+      border-radius: 50% 50% 0 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- SETUP -->
+  <div>
+    <h2 class="label">Setup Screen</h2>
+    <div class="phone">
+      <div class="setup">
+        <span class="bg-emoji">🍟</span>
+        <span class="bg-emoji">🍔</span>
+        <span class="bg-emoji">🌭</span>
+        <span class="bg-emoji">🍕</span>
+        <span class="bg-emoji">🧁</span>
+        <span class="bg-emoji">🥤</span>
+        <span class="bg-emoji">🍩</span>
+        <span class="bg-emoji">🍿</span>
+
+        <div class="title">NO<br>FATTIES</div>
+        <p class="subtitle">Set your bite limit. We'll watch. We'll count. We'll judge.</p>
+        <div class="limit-label">Bite Limit</div>
+        <div class="limit-input">10</div>
+        <div class="presets">
+          <div class="preset">5</div>
+          <div class="preset active">10</div>
+          <div class="preset">25</div>
+          <div class="preset">50</div>
+        </div>
+        <div class="start-btn">START</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MONITOR -->
+  <div>
+    <h2 class="label">Monitoring Screen</h2>
+    <div class="phone">
+      <div class="monitor">
+        <div class="fake-camera"></div>
+        <div class="camera-text">Live Camera Feed</div>
+        <div class="status">Tracking active</div>
+        <div class="counter-overlay">
+          <div class="count-num">3</div>
+          <span class="count-divider">/</span>
+          <span class="count-limit">10</span>
+        </div>
+        <div class="progress-wrap">
+          <div class="progress-bg">
+            <div class="progress-fill"></div>
+          </div>
+          <div class="progress-label">3 bites detected</div>
+        </div>
+        <div class="bite-indicator">🫳🍟</div>
+        <div class="stop-btn">STOP</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ALARM -->
+  <div>
+    <h2 class="label">Alarm Screen</h2>
+    <div class="phone">
+      <div class="alarm">
+        <span class="bg-food">🍟</span>
+        <span class="bg-food">🍔</span>
+        <span class="bg-food">🌭</span>
+        <span class="bg-food">🍕</span>
+        <span class="bg-food">🧁</span>
+        <span class="bg-food">🍩</span>
+
+        <div class="alarm-emoji">🚨🍟🚨</div>
+        <div class="alarm-title">NO<br>FATTIES!</div>
+        <div class="final-text">You hit 10 bites!</div>
+        <div class="stop-alarm-btn">STOP</div>
+        <div class="alarm-wave"></div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

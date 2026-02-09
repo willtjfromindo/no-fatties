@@ -1,0 +1,13 @@
+{
+  "name": "No Fatties - Bite Counter",
+  "short_name": "No Fatties",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FFFFFF",
+  "theme_color": "#D62828",
+  "description": "Set your bite limit. We'll watch. We'll count. We'll judge.",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

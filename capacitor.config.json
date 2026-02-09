@@ -1,0 +1,12 @@
+{
+  "appId": "com.nofatties.app",
+  "appName": "No Fatties",
+  "webDir": "no-fatties",
+  "server": {
+    "iosScheme": "capacitor",
+    "allowNavigation": ["*"]
+  },
+  "ios": {
+    "allowsLinkPreview": false
+  }
+}

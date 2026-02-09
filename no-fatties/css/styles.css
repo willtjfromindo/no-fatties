@@ -1,0 +1,533 @@
+@font-face {
+  font-family: 'Fredoka One';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/fredoka-one-latin.woff2') format('woff2');
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  width: 100%; height: 100%;
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  background: #FFFFFF;
+  color: #2B2D42;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.screen {
+  position: absolute;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.screen.active { display: flex; }
+
+/* ── Setup Screen ── */
+#setup-screen {
+  gap: 24px;
+  padding: 24px;
+  background: #FFFFFF;
+  position: relative;
+}
+
+#setup-screen .bg-emoji {
+  position: absolute;
+  font-size: 40px;
+  opacity: 0.12;
+  pointer-events: none;
+}
+#setup-screen .bg-emoji:nth-child(1) { top: 8%; left: 10%; font-size: 50px; transform: rotate(-15deg); }
+#setup-screen .bg-emoji:nth-child(2) { top: 15%; right: 12%; font-size: 35px; transform: rotate(20deg); }
+#setup-screen .bg-emoji:nth-child(3) { top: 35%; left: 5%; font-size: 45px; transform: rotate(10deg); }
+#setup-screen .bg-emoji:nth-child(4) { bottom: 25%; right: 8%; font-size: 55px; transform: rotate(-10deg); }
+#setup-screen .bg-emoji:nth-child(5) { bottom: 12%; left: 15%; font-size: 38px; transform: rotate(25deg); }
+#setup-screen .bg-emoji:nth-child(6) { top: 55%; right: 15%; font-size: 42px; transform: rotate(-20deg); }
+#setup-screen .bg-emoji:nth-child(7) { bottom: 40%; left: 25%; font-size: 30px; transform: rotate(5deg); }
+#setup-screen .bg-emoji:nth-child(8) { top: 5%; left: 50%; font-size: 32px; transform: rotate(-8deg); }
+
+#setup-screen h1 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 52px;
+  color: #D62828;
+  text-align: center;
+  z-index: 1;
+  text-shadow: 2px 2px 0 rgba(0,0,0,0.05);
+  line-height: 1.1;
+}
+
+#setup-screen .subtitle {
+  font-size: 15px;
+  color: #888;
+  text-align: center;
+  max-width: 260px;
+  line-height: 1.5;
+  z-index: 1;
+}
+
+.limit-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  max-width: 320px;
+  z-index: 1;
+}
+
+.limit-section label {
+  font-size: 12px;
+  color: #aaa;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-weight: 600;
+}
+
+#limit-input {
+  width: 130px;
+  font-size: 56px;
+  font-family: 'Fredoka One', cursive;
+  text-align: center;
+  background: #FFF8F0;
+  border: 3px solid #F4A261;
+  border-radius: 20px;
+  color: #D62828;
+  padding: 8px;
+  outline: none;
+  -moz-appearance: textfield;
+}
+#limit-input::-webkit-inner-spin-button,
+#limit-input::-webkit-outer-spin-button { -webkit-appearance: none; }
+#limit-input:focus { border-color: #D62828; }
+
+.presets {
+  display: flex;
+  gap: 10px;
+}
+.preset-btn {
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: 700;
+  background: #FFF;
+  border: 2px solid #E8E8E8;
+  border-radius: 14px;
+  color: #555;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.preset-btn:active {
+  background: #FFF0E0;
+  border-color: #F4A261;
+  color: #D62828;
+}
+
+#start-btn {
+  margin-top: 8px;
+  padding: 18px 72px;
+  font-size: 22px;
+  font-family: 'Fredoka One', cursive;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  background: #D62828;
+  border: none;
+  border-radius: 18px;
+  color: #fff;
+  cursor: pointer;
+  z-index: 1;
+  box-shadow: 0 6px 20px rgba(214, 40, 40, 0.3);
+  transition: transform 0.1s;
+}
+#start-btn:active { transform: scale(0.96); }
+
+/* ── Monitor Screen ── */
+#monitor-screen {
+  background: #1a1a1a;
+}
+
+#camera {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scaleX(-1);
+}
+
+.monitor-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.counter-display {
+  margin-top: 40px;
+  text-align: center;
+}
+
+#current-count {
+  font-family: 'Fredoka One', cursive;
+  font-size: 110px;
+  font-weight: 900;
+  color: #fff;
+  text-shadow: 0 4px 30px rgba(0,0,0,0.5);
+  line-height: 1;
+}
+
+.counter-divider {
+  font-size: 28px;
+  font-weight: 300;
+  color: rgba(255,255,255,0.5);
+  text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+}
+
+#limit-display {
+  font-size: 28px;
+  font-weight: 300;
+  color: rgba(255,255,255,0.5);
+  text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+}
+
+.progress-container {
+  width: 80%;
+  max-width: 360px;
+  height: 12px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 60px;
+}
+
+#progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #F4A261, #D62828);
+  border-radius: 6px;
+  transition: width 0.3s ease;
+}
+
+#stop-btn {
+  position: absolute;
+  bottom: 30px;
+  right: 24px;
+  padding: 10px 22px;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  background: rgba(0,0,0,0.5);
+  border: 2px solid rgba(255,255,255,0.2);
+  border-radius: 12px;
+  color: #fff;
+  cursor: pointer;
+  pointer-events: auto;
+  z-index: 3;
+}
+
+.bite-flash {
+  position: absolute;
+  inset: 0;
+  background: rgba(214, 40, 40, 0.25);
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.1s;
+  pointer-events: none;
+}
+.bite-flash.active {
+  opacity: 1;
+  transition: none;
+}
+
+/* ── Alarm Screen ── */
+#alarm-screen {
+  background: linear-gradient(135deg, #D62828, #B01E1E);
+  gap: 28px;
+  animation: alarm-pulse 0.5s ease-in-out infinite alternate;
+  position: relative;
+}
+
+@keyframes alarm-pulse {
+  from { background: linear-gradient(135deg, #D62828, #B01E1E); }
+  to { background: linear-gradient(135deg, #B01E1E, #8B1515); }
+}
+
+#alarm-screen .bg-food {
+  position: absolute;
+  font-size: 60px;
+  opacity: 0.15;
+  pointer-events: none;
+}
+#alarm-screen .bg-food:nth-child(1) { top: 5%; left: 10%; transform: rotate(-20deg); }
+#alarm-screen .bg-food:nth-child(2) { top: 10%; right: 10%; font-size: 50px; transform: rotate(15deg); }
+#alarm-screen .bg-food:nth-child(3) { bottom: 15%; left: 15%; font-size: 55px; transform: rotate(10deg); }
+#alarm-screen .bg-food:nth-child(4) { bottom: 8%; right: 12%; transform: rotate(-15deg); }
+#alarm-screen .bg-food:nth-child(5) { top: 40%; left: 5%; font-size: 45px; }
+#alarm-screen .bg-food:nth-child(6) { top: 45%; right: 5%; font-size: 50px; transform: rotate(20deg); }
+
+#alarm-screen .alarm-emoji {
+  font-size: 48px;
+  z-index: 1;
+}
+
+#alarm-screen h1 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 58px;
+  font-weight: 900;
+  text-transform: uppercase;
+  text-align: center;
+  color: #fff;
+  text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  z-index: 1;
+  line-height: 1.1;
+}
+
+#alarm-screen .final-count {
+  font-size: 18px;
+  font-weight: 400;
+  color: rgba(255,255,255,0.85);
+  z-index: 1;
+}
+
+#stop-alarm-btn {
+  padding: 20px 52px;
+  font-size: 22px;
+  font-family: 'Fredoka One', cursive;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  background: #fff;
+  border: none;
+  border-radius: 18px;
+  color: #D62828;
+  cursor: pointer;
+  z-index: 1;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+  transition: transform 0.1s;
+}
+#stop-alarm-btn:active { transform: scale(0.96); }
+
+.alarm-wave {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 120px;
+  background: rgba(0,0,0,0.1);
+  border-radius: 50% 50% 0 0;
+  pointer-events: none;
+}
+
+/* ── Shame Screen ── */
+#shame-screen {
+  background: #000;
+  justify-content: flex-start;
+}
+
+#shame-camera {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scaleX(-1);
+  z-index: 0;
+}
+
+#shame-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+}
+
+#shame-flash {
+  position: absolute;
+  inset: 0;
+  background: #fff;
+  z-index: 5;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease-out;
+}
+#shame-flash.active {
+  opacity: 1;
+  transition: none;
+}
+
+#shame-frozen {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: none;
+  background-size: cover;
+  background-position: center;
+}
+#shame-frozen.active {
+  display: block;
+}
+
+#shame-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  font-size: 120px;
+  z-index: 6;
+  pointer-events: none;
+  opacity: 0;
+  transition: transform 0.3s ease-out, opacity 0.3s;
+}
+#shame-text.active {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+}
+#shame-text.fade {
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+#shame-caption {
+  position: absolute;
+  bottom: 120px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Fredoka One', cursive;
+  font-size: 28px;
+  color: #fff;
+  text-align: center;
+  text-shadow: 0 3px 15px rgba(0,0,0,0.8);
+  z-index: 7;
+  opacity: 0;
+  transition: opacity 0.5s;
+  line-height: 1.3;
+}
+#shame-caption.active {
+  opacity: 1;
+}
+
+#shame-dismiss-btn {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 16px 48px;
+  font-size: 18px;
+  font-family: 'Fredoka One', cursive;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  background: #D62828;
+  border: none;
+  border-radius: 16px;
+  color: #fff;
+  cursor: pointer;
+  z-index: 7;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+}
+#shame-dismiss-btn.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+#shame-dismiss-btn:active { transform: translateX(-50%) scale(0.96); }
+
+/* ── Loading Overlay ── */
+#loading-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  z-index: 100;
+}
+#loading-overlay.active { display: flex; }
+
+.spinner {
+  width: 48px; height: 48px;
+  border: 4px solid rgba(255,255,255,0.15);
+  border-top-color: #D62828;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+#loading-text {
+  font-size: 16px;
+  color: #aaa;
+}
+
+/* ── Error Overlay ── */
+#error-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.9);
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  z-index: 101;
+  padding: 24px;
+}
+#error-overlay.active { display: flex; }
+
+.error-icon {
+  width: 60px; height: 60px;
+  border-radius: 50%;
+  background: #D62828;
+  color: #fff;
+  font-size: 32px;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#error-text {
+  font-size: 14px;
+  color: #ccc;
+  text-align: center;
+  max-width: 300px;
+  line-height: 1.5;
+}
+
+#retry-btn {
+  padding: 14px 48px;
+  font-size: 16px;
+  font-family: 'Fredoka One', cursive;
+  background: #D62828;
+  border: none;
+  border-radius: 14px;
+  color: #fff;
+  cursor: pointer;
+  transition: transform 0.1s;
+}
+#retry-btn:active { transform: scale(0.96); }
+
+/* ── Status message ── */
+#status-msg {
+  position: absolute;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 12px;
+  color: rgba(255,255,255,0.4);
+  z-index: 10;
+  pointer-events: none;
+  text-align: center;
+}
