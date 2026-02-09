@@ -19,6 +19,10 @@ export function startDetectionLoop(onLimitReached) {
       state.biteCount = count;
       updateCounter(state.biteCount, state.biteLimit);
       flashBite();
+      if (window.posthog) window.posthog.capture('bite_detected', {
+        bite_count: count,
+        bite_limit: state.biteLimit,
+      });
     },
     onLimitReached,
   });

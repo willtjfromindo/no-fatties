@@ -7,6 +7,11 @@ import { startDetectionLoop, stopDetectionLoop, resetGestureState } from './dete
 import { ensureAudioContext, playAlarm, stopAlarm } from './audio.js';
 import { requestWakeLock, releaseWakeLock } from './wakelock.js';
 import { checkCapabilities } from './capability.js';
+
+function track(event, props) {
+  if (window.posthog) window.posthog.capture(event, props);
+}
+
 // ─── Flow Control ───
 
 async function startMonitoring() {
@@ -41,16 +46,23 @@ async function startMonitoring() {
 
     showLoading(false);
     showScreen('monitor');
+    track('monitoring_started', { bite_limit: state.biteLimit });
 
     startDetectionLoop(triggerAlarm);
   } catch (err) {
     showLoading(false);
     console.error('Start error:', err);
     showError(err.message);
+    track('start_failed', { error: err.message });
   }
 }
 
 function stopMonitoring() {
+  track('monitoring_stopped', {
+    bite_count: state.biteCount,
+    bite_limit: state.biteLimit,
+    hit_limit: false,
+  });
   stopDetectionLoop();
   stopCamera();
   releaseWakeLock();
@@ -59,6 +71,10 @@ function stopMonitoring() {
 }
 
 function triggerAlarm() {
+  track('alarm_triggered', {
+    bite_count: state.biteCount,
+    bite_limit: state.biteLimit,
+  });
   stopDetectionLoop();
   stopCamera();
   releaseWakeLock();
